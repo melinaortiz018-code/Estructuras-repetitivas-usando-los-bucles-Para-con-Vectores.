@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Temperaturas Semanales - Manta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f6fa;
+            padding: 20px;
+        }
+        table {
+            background-color: #ffffff;
+            border-collapse: collapse;
+            margin: 0 auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #dcd0e8;
+        }
+        td {
+            padding: 12px;
+            border: 1px solid #dcd0e8;
+        }
+        button {
+            cursor: pointer;
+            padding: 8px 14px;
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #8e44ad;
+        }
+        input, textarea {
+            padding: 8px;
+            border: 1px solid #d2c1e2;
+            border-radius: 4px;
+            outline: none;
+        }
+        input:focus, textarea:focus {
+            border-color: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <td colspan="3" align="center" bgcolor="#9b59b6" style="color: white; font-weight: bold; font-size: 16px;">
+                    Registro de Temperaturas Semanales - Manta
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Temperatura (°C): </td>
+                <td><input type="number" id="txt-temperatura" placeholder="Ej: 30" step="0.1"></td>
+                <td align="center">
+                    <button id="btn-agregar-temperatura">Agregar Temp.</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Listado Días:</td>
+                <td>
+                    <textarea id="txt-listado-temperaturas" placeholder="Listado de temperaturas" rows="8" cols="30" readonly></textarea>
+                </td>
+                <td align="center">
+                    <button id="btn-presentar-temperaturas" style="margin-bottom: 10px;">Presentar</button>
+                    <br>
+                    <button id="btn-limpiar" onclick="location.reload()">Reiniciar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Promedio Semanal (°C):</td>
+                <td>
+                    <input type="text" placeholder="0.00 °C" readonly id="txt-promedio-temperatura">
+                </td>
+                <td align="center">
+                    <button id="btn-calcular-promedio">Calcular Promedio</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Días sobre el promedio:</td>
+                <td colspan="2">
+                    <textarea id="txt-dias-superiores" placeholder="Días que superaron el promedio..." rows="4" style="width: 95%;" readonly></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Nombres de los días para la presentación
+        const DIAS_SEMANA = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+
+        // Agregar referencia a los controles
+        const txtTemperatura = document.getElementById('txt-temperatura')
+        const btnAgregarTemperatura = document.getElementById('btn-agregar-temperatura')
+
+        const txtListadoTemperaturas = document.getElementById('txt-listado-temperaturas')
+        const btnPresentarTemperaturas = document.getElementById('btn-presentar-temperaturas')
+
+        const txtPromedioTemperatura = document.getElementById('txt-promedio-temperatura')
+        const btnCalcularPromedio = document.getElementById('btn-calcular-promedio')
+
+        const txtDiasSuperiores = document.getElementById('txt-dias-superiores')
+
+        const TOPE = 7
+        // Definir el Vector de temperaturas
+        let temperaturas = []
+
+        // Agregar Evento Escuchador Click (Agregar Temperatura)
+        btnAgregarTemperatura.addEventListener('click', function(e){
+            // Extraer temperatura de la caja de texto
+            const temp = parseFloat(txtTemperatura.value)
+
+            if (isNaN(temp)) {
+                alert("Por favor, ingrese un número válido.")
+                return
+            }
+
+            // Calcular cantidad de elementos del Vector
+            const cantElementos = temperaturas.length
+
+            // Mientras cantElementos sea Menor al TOPE=7 continuo agregando temperaturas
+            if (cantElementos < TOPE){
+                const indice = cantElementos
+                // Asignar o agregar la nueva temperatura
+                temperaturas[indice] = temp
+                console.log('temperaturas: ', temperaturas)
+                txtTemperatura.value = ''
+                txtTemperatura.focus()
+            }
+            else{
+                alert("Ya se ingresaron las temperaturas de los 7 días de la semana.")
+            }
+        })
+
+        // Agregar Evento Escuchador Click (Presentar)
+        btnPresentarTemperaturas.addEventListener('click', function(e){
+            txtListadoTemperaturas.value = ''
+            for(let i = 0; i < temperaturas.length; i++){
+                txtListadoTemperaturas.value += DIAS_SEMANA[i] + ': ' + temperaturas[i] + ' °C\n'
+            }
+        })
+
+        // Agregar Evento Escuchador Click (Calcular Promedio y Días Superiores)
+        btnCalcularPromedio.addEventListener('click', function(e){
+            if (temperaturas.length === 0) {
+                alert("Primero debes ingresar al menos una temperatura.")
+                return
+            }
+
+            // Calcular Promedio
+            const promedio = fnCalcularPromedio()
+            txtPromedioTemperatura.value = promedio.toFixed(2) + ' °C'
+
+            // Mostrar días que superan el promedio
+            txtDiasSuperiores.value = ''
+            for (let i = 0; i < temperaturas.length; i++) {
+                if (temperaturas[i] > promedio) {
+                    txtDiasSuperiores.value += DIAS_SEMANA[i] + ' (' + temperaturas[i] + ' °C)\n'
+                }
+            }
+
+            if (txtDiasSuperiores.value === '') {
+                txtDiasSuperiores.value = "Ningún día superó el promedio."
+            }
+        })
+
+        // Retorna promedio de temperaturas
+        function fnCalcularPromedio(){
+            let sumaTemperaturas = 0 // Acumulador
+
+            for(let i = 0; i < temperaturas.length; i++){
+                sumaTemperaturas = sumaTemperaturas + temperaturas[i]
+            }
+
+            return sumaTemperaturas / temperaturas.length
+        }
+    </script>
+</body>
+</html>
