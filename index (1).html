@@ -2,25 +2,35 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Control de Inventario</title>
+    <title>Promedio de Calificaciones</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Control de Inventario</h1>
-        <input type="number" id="p0" placeholder="Precio Arroz">
-        <input type="number" id="p1" placeholder="Precio Azúcar">
-        <input type="number" id="p2" placeholder="Precio Leche">
-        <input type="number" id="p3" placeholder="Precio Pan">
-        <input type="number" id="p4" placeholder="Precio Aceite">
-        <input type="number" id="p5" placeholder="Precio Huevos">
-        <br>
-        <button onclick="procesarInventario()">Calcular Inventario</button>
+        <h1>Promedio de Estudiantes</h1>
+        
+        <div class="grid-inputs">
+            <input type="number" id="n0" placeholder="Est 1" oninput="validarNota(this)">
+            <input type="number" id="n1" placeholder="Est 2" oninput="validarNota(this)">
+            <input type="number" id="n2" placeholder="Est 3" oninput="validarNota(this)">
+            <input type="number" id="n3" placeholder="Est 4" oninput="validarNota(this)">
+            <input type="number" id="n4" placeholder="Est 5" oninput="validarNota(this)">
+            <input type="number" id="n5" placeholder="Est 6" oninput="validarNota(this)">
+            <input type="number" id="n6" placeholder="Est 7" oninput="validarNota(this)">
+            <input type="number" id="n7" placeholder="Est 8" oninput="validarNota(this)">
+            <input type="number" id="n8" placeholder="Est 9" oninput="validarNota(this)">
+            <input type="number" id="n9" placeholder="Est 10" oninput="validarNota(this)">
+            <input type="number" id="n10" placeholder="Est 11" oninput="validarNota(this)">
+            <input type="number" id="n11" placeholder="Est 12" oninput="validarNota(this)">
+        </div>
+        
+        <button onclick="procesarCalificaciones()">Calcular Resultados</button>
         
         <div id="resultados">
             <h2>Resultados:</h2>
-            <ul id="lista"></ul>
-            <p id="total"></p>
+            <p id="promedio"></p>
+            <p id="aprobados"></p>
+            <p id="reprobados"></p>
         </div>
     </div>
     <script src="script.js"></script>
