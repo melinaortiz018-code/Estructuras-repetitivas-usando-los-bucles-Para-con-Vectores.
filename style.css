@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
 body { 
     font-family: 'Roboto', sans-serif; 
@@ -15,30 +16,26 @@ body {
     border-radius: 12px; 
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     width: 100%;
-    max-width: 450px;
+    max-width: 350px;
 }
 
 h1 { color: #333; text-align: center; font-size: 1.5rem; margin-bottom: 20px; }
 
-.grid-inputs {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 15px;
-}
+label { display: block; margin-bottom: 8px; color: #555; }
 
 input { 
     width: 100%; 
-    padding: 10px; 
+    padding: 12px; 
+    margin-bottom: 15px; 
     border: 1px solid #ddd; 
-    border-radius: 4px;
+    border-radius: 6px;
     box-sizing: border-box;
 }
 
 button { 
     width: 100%; 
     padding: 12px; 
-    background-color: #3498db; 
+    background-color: #2c3e50; 
     color: white; 
     border: none; 
     border-radius: 6px; 
@@ -47,7 +44,6 @@ button {
     transition: background 0.3s;
 }
 
-button:hover { background-color: #2980b9; }
+button:hover { background-color: #34495e; }
 
-#resultados { margin-top: 25px; border-top: 2px solid #f0f0f0; padding-top: 15px; }
-p { margin: 8px 0; color: #555; font-weight: bold; }
+.resultado { margin-top: 20px; padding: 15px; border-radius: 6px; text-align: center; font-weight: bold; }
