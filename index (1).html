@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Control de Inventario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Control de Inventario</h1>
+        <input type="number" id="p0" placeholder="Precio Arroz">
+        <input type="number" id="p1" placeholder="Precio Azúcar">
+        <input type="number" id="p2" placeholder="Precio Leche">
+        <input type="number" id="p3" placeholder="Precio Pan">
+        <input type="number" id="p4" placeholder="Precio Aceite">
+        <input type="number" id="p5" placeholder="Precio Huevos">
+        <br>
+        <button onclick="procesarInventario()">Calcular Inventario</button>
+        
+        <div id="resultados">
+            <h2>Resultados:</h2>
+            <ul id="lista"></ul>
+            <p id="total"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
