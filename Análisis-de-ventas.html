@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Análisis de ventas</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 500px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        input {
+            width: 150px;
+            padding: 6px;
+        }
+
+        button {
+            padding: 8px 25px;
+            cursor: pointer;
+        }
+
+        .resultado {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Análisis de ventas de 15 días</h2>
+
+    <table>
+
+        <tr>
+            <th>Día</th>
+            <th>Venta</th>
+        </tr>
+
+        <tr><td>1</td><td><input type="number" id="venta1"></td></tr>
+        <tr><td>2</td><td><input type="number" id="venta2"></td></tr>
+        <tr><td>3</td><td><input type="number" id="venta3"></td></tr>
+        <tr><td>4</td><td><input type="number" id="venta4"></td></tr>
+        <tr><td>5</td><td><input type="number" id="venta5"></td></tr>
+        <tr><td>6</td><td><input type="number" id="venta6"></td></tr>
+        <tr><td>7</td><td><input type="number" id="venta7"></td></tr>
+        <tr><td>8</td><td><input type="number" id="venta8"></td></tr>
+        <tr><td>9</td><td><input type="number" id="venta9"></td></tr>
+        <tr><td>10</td><td><input type="number" id="venta10"></td></tr>
+        <tr><td>11</td><td><input type="number" id="venta11"></td></tr>
+        <tr><td>12</td><td><input type="number" id="venta12"></td></tr>
+        <tr><td>13</td><td><input type="number" id="venta13"></td></tr>
+        <tr><td>14</td><td><input type="number" id="venta14"></td></tr>
+        <tr><td>15</td><td><input type="number" id="venta15"></td></tr>
+
+        <tr>
+            <td class="resultado">Venta mayor</td>
+            <td class="resultado" id="mayor">$0.00</td>
+        </tr>
+
+        <tr>
+            <td class="resultado">Venta menor</td>
+            <td class="resultado" id="menor">$0.00</td>
+        </tr>
+
+    </table>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <script>
+
+        function calcular() {
+
+            // Vector
+            let ventas = [];
+
+            // Guardar las ventas
+            for (let i = 1; i <= 15; i++) {
+                ventas[i - 1] =
+                    Number(document.getElementById("venta" + i).value);
+            }
+
+            let mayor = ventas[0];
+            let menor = ventas[0];
+
+            let diaMayor = 1;
+            let diaMenor = 1;
+
+            // Buscar mayor y menor
+            for (let i = 1; i < 15; i++) {
+
+                if (ventas[i] > mayor) {
+                    mayor = ventas[i];
+                    diaMayor = i + 1;
+                }
+
+                if (ventas[i] < menor) {
+                    menor = ventas[i];
+                    diaMenor = i + 1;
+                }
+            }
+
+            // Mostrar resultados
+            document.getElementById("mayor").innerHTML =
+                "$" + mayor.toFixed(2) + " - Día " + diaMayor;
+
+            document.getElementById("menor").innerHTML =
+                "$" + menor.toFixed(2) + " - Día " + diaMenor;
+        }
+
+    </script>
+
+</body>
+</html>
